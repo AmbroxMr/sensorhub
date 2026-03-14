@@ -30,8 +30,8 @@ def get_stats():
 
 
 @app.get("/export")
-def export_csv():
-    return readings.export_csv(db)
+def export_csv(device_id: str = Query(default=None)):
+    return readings.export_csv(db, device_id=device_id)
 
 
 @app.post("/reports/generate")

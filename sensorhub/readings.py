@@ -38,8 +38,8 @@ def compute_stats(db: MongoDB) -> list[dict]:
     return stats.replace({np.nan: None}).to_dict(orient="records")
 
 
-def export_csv(db: MongoDB) -> StreamingResponse:
-    docs = list(db.read_sensor_data())
+def export_csv(db: MongoDB, device_id: str = None) -> StreamingResponse:
+    docs = list(db.read_sensor_data(device_id=device_id))
     for doc in docs:
         doc.pop("_id", None)
     df = pd.DataFrame(docs)
