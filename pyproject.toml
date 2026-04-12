@@ -33,6 +33,7 @@ dev = [
     "pytest>=8.0",
     "pytest-cov>=6.0",
     "pytest-docker>=3.0",
+    "requests>=2.33.1",
     "ruff>=0.9",
     "ty>=0.0.1a8",
 ]

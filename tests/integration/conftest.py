@@ -39,12 +39,18 @@ def _mongo_ok() -> bool:
 
 
 @pytest.fixture(scope="session")
-def client(docker_services):
+def infraestructura(docker_services):
+    """Espera a que Mongo esté listo antes de arrancar la sesión de tests."""
     docker_services.wait_until_responsive(check=_mongo_ok, timeout=60, pause=1)
+
+
+@pytest.fixture(scope="session")
+def client(infraestructura):
     return TestClient(app)
 
 
 @pytest.fixture(autouse=True)
-def clean_db(client):
+def clean_db(client: TestClient):
+    assert client.get("/health").status_code == 200
     MongoClient(MONGO_URI)["sensorhub"]["sensor_data"].delete_many({})
     yield
