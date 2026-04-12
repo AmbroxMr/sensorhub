@@ -4,7 +4,7 @@ from minio import Minio
 
 from sensorhub.config import Settings
 
-settings = Settings()
+settings = Settings()  # type: ignore[call-arg]
 
 
 class MinioClient:

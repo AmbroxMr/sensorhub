@@ -9,7 +9,7 @@ from sensorhub.minio import MinioClient
 from sensorhub.mongo import MongoDB
 
 
-def generate(db: MongoDB, hour: str = None) -> dict:
+def generate(db: MongoDB, hour: str | None = None) -> dict:
     if hour:
         start = datetime.fromisoformat(hour).replace(minute=0, second=0, microsecond=0)
     else:

@@ -7,7 +7,7 @@ from fastapi.responses import StreamingResponse
 from sensorhub.mongo import MongoDB
 
 
-def list_readings(db: MongoDB, device_id: str = None, limit: int = None) -> list[dict]:
+def list_readings(db: MongoDB, device_id: str | None = None, limit: int | None = None) -> list[dict]:
     cursor = db.read_sensor_data(device_id=device_id, max_records=limit)
     readings = []
     for doc in cursor:

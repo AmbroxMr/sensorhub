@@ -4,7 +4,7 @@ import pika
 
 from sensorhub.config import Settings
 
-settings = Settings()
+settings = Settings()  # type: ignore[call-arg]
 QUEUE_NAME = "sensor.readings"
 
 

@@ -9,11 +9,12 @@ import time
 from datetime import UTC, datetime
 
 import pika
+import pika.exceptions
 
 from sensorhub.config import Settings
 from sensorhub.mongo import MongoDB
 
-settings = Settings()
+settings = Settings()  # type: ignore[call-arg]
 QUEUE_NAME = "sensor.readings"
 BATCH_SIZE = 50
 FLUSH_INTERVAL = 5

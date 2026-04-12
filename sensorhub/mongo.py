@@ -2,7 +2,7 @@ from pymongo import MongoClient
 from sensorhub.config import Settings
 from sensorhub.sensor_data import SensorData
 
-settings = Settings()
+settings = Settings()  # type: ignore[call-arg]
 
 
 class MongoDB:
@@ -20,7 +20,7 @@ class MongoDB:
     def upload_sensor_data(self, sensor_data: SensorData):
         self.client_collection.insert_one(sensor_data.model_dump())
 
-    def read_sensor_data(self, device_id: str = None, max_records: int = None):
+    def read_sensor_data(self, device_id: str | None = None, max_records: int | None = None):
         query = {"device_id": device_id} if device_id else {}
         limit = max_records if max_records is not None else 0
         return self.client_collection.find(query, limit=limit)
