@@ -28,7 +28,9 @@ def test_get_readings_returns_200(client, mock_db):
 def test_get_readings_passes_device_id_filter(client, mock_db):
     mock_db.read_sensor_data.return_value = []
     client.get("/readings?device_id=sensor-01")
-    mock_db.read_sensor_data.assert_called_once_with(device_id="sensor-01", max_records=None)
+    mock_db.read_sensor_data.assert_called_once_with(
+        device_id="sensor-01", max_records=None
+    )
 
 
 def test_get_readings_passes_limit(client, mock_db):

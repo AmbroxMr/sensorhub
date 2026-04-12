@@ -41,7 +41,9 @@ def run() -> None:
     connection = None
     while connection is None:
         try:
-            connection = pika.BlockingConnection(pika.URLParameters(settings.rabbitmq_url))
+            connection = pika.BlockingConnection(
+                pika.URLParameters(settings.rabbitmq_url)
+            )
         except pika.exceptions.AMQPConnectionError:
             print("[worker] RabbitMQ no disponible, reintentando en 3s...")
             time.sleep(3)
@@ -49,7 +51,9 @@ def run() -> None:
     channel = connection.channel()
     channel.queue_declare(queue=QUEUE_NAME, durable=True)
     channel.basic_qos(prefetch_count=BATCH_SIZE)
-    print(f"[worker] Escuchando en '{QUEUE_NAME}' — batch={BATCH_SIZE}, flush cada {FLUSH_INTERVAL}s")
+    print(
+        f"[worker] Escuchando en '{QUEUE_NAME}' — batch={BATCH_SIZE}, flush cada {FLUSH_INTERVAL}s"
+    )
 
     def flush() -> None:
         nonlocal buffer, last_flush
@@ -68,7 +72,9 @@ def run() -> None:
         doc = _parse_document(json.loads(body))
         buffer.append(doc)
         channel.basic_ack(delivery_tag=method.delivery_tag)
-        print(f"[worker] Recibido: {doc['device_id']} | CO2={doc['co2']}ppm (buffer={len(buffer)})")
+        print(
+            f"[worker] Recibido: {doc['device_id']} | CO2={doc['co2']}ppm (buffer={len(buffer)})"
+        )
 
         if len(buffer) >= BATCH_SIZE:
             flush()

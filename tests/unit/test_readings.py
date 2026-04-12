@@ -13,6 +13,7 @@ def test_list_readings_returns_empty_when_no_data():
 
 def test_list_readings_serializes_object_id():
     from bson import ObjectId
+
     mock_db = MagicMock()
     mock_db.read_sensor_data.return_value = [
         {"_id": ObjectId(), "device_id": "sensor-01", "temperature": 22.5}
@@ -25,7 +26,9 @@ def test_list_readings_passes_device_id_filter():
     mock_db = MagicMock()
     mock_db.read_sensor_data.return_value = []
     list_readings(mock_db, device_id="sensor-01")
-    mock_db.read_sensor_data.assert_called_once_with(device_id="sensor-01", max_records=None)
+    mock_db.read_sensor_data.assert_called_once_with(
+        device_id="sensor-01", max_records=None
+    )
 
 
 def test_list_readings_passes_limit():
@@ -83,7 +86,13 @@ def test_compute_stats_calls_db_once(sample_readings):
 def test_export_csv_returns_streaming_response():
     mock_db = MagicMock()
     mock_db.read_sensor_data.return_value = [
-        {"device_id": "sensor-01", "location": "office", "temperature": 22.5, "humidity": 55.0, "co2": 420.0}
+        {
+            "device_id": "sensor-01",
+            "location": "office",
+            "temperature": 22.5,
+            "humidity": 55.0,
+            "co2": 420.0,
+        }
     ]
     result = export_csv(mock_db)
     assert isinstance(result, StreamingResponse)

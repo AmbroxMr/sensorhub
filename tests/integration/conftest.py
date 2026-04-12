@@ -2,24 +2,14 @@ import os
 from pathlib import Path
 
 import pytest
+from dotenv import dotenv_values
 from fastapi.testclient import TestClient
 from pymongo import MongoClient
 
 _ROOT = Path(__file__).parent.parent.parent
 
-
-def _load_env(path: Path) -> dict:
-    env = {}
-    for line in path.read_text().splitlines():
-        line = line.strip()
-        if line and not line.startswith("#") and "=" in line:
-            k, _, v = line.partition("=")
-            env[k.strip()] = v.strip()
-    return env
-
-
 # Cargamos las vars antes de importar sensorhub para que Settings() las lea
-_env = _load_env(_ROOT / ".env.test")
+_env = dotenv_values(_ROOT / ".env.test")
 os.environ.update(_env)
 
 from sensorhub.api import app  # noqa: E402

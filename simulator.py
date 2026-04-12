@@ -35,7 +35,9 @@ def simulate(rate: float = 2.0, total: int | None = None) -> None:
     channel.queue_declare(queue=QUEUE_NAME, durable=True)
 
     total_str = str(total) if total else "infinito"
-    print(f"[sim] Conectado. Rate: {rate} msg/s | Total: {total_str} | Ctrl+C para parar\n")
+    print(
+        f"[sim] Conectado. Rate: {rate} msg/s | Total: {total_str} | Ctrl+C para parar\n"
+    )
 
     count = 0
     try:
@@ -68,7 +70,14 @@ def simulate(rate: float = 2.0, total: int | None = None) -> None:
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Simulador de sensores IoT → RabbitMQ")
-    parser.add_argument("--rate", type=float, default=2.0, help="Mensajes por segundo (default: 2)")
-    parser.add_argument("--total", type=int, default=None, help="Nº total de mensajes (default: infinito)")
+    parser.add_argument(
+        "--rate", type=float, default=2.0, help="Mensajes por segundo (default: 2)"
+    )
+    parser.add_argument(
+        "--total",
+        type=int,
+        default=None,
+        help="Nº total de mensajes (default: infinito)",
+    )
     args = parser.parse_args()
     simulate(rate=args.rate, total=args.total)

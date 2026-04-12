@@ -29,7 +29,13 @@ def test_generate_ventana_de_hora_correcta():
 def test_generate_retorna_object_key_y_link():
     mock_db = MagicMock()
     mock_db.read_sensor_data_by_time.return_value = [
-        {"device_id": "s1", "location": "office", "temperature": 22.0, "humidity": 55.0, "co2": 400.0}
+        {
+            "device_id": "s1",
+            "location": "office",
+            "temperature": 22.0,
+            "humidity": 55.0,
+            "co2": 400.0,
+        }
     ]
     with patch("sensorhub.reports.MinioClient") as mock_cls:
         mock_cls.return_value.upload_csv.return_value = None
@@ -41,7 +47,13 @@ def test_generate_retorna_object_key_y_link():
 def test_generate_llama_a_minio_upload():
     mock_db = MagicMock()
     mock_db.read_sensor_data_by_time.return_value = [
-        {"device_id": "s1", "location": "office", "temperature": 22.0, "humidity": 55.0, "co2": 400.0}
+        {
+            "device_id": "s1",
+            "location": "office",
+            "temperature": 22.0,
+            "humidity": 55.0,
+            "co2": 400.0,
+        }
     ]
     with patch("sensorhub.reports.MinioClient") as mock_cls:
         mock_instance = MagicMock()
@@ -53,7 +65,13 @@ def test_generate_llama_a_minio_upload():
 def test_generate_object_key_contiene_fecha_y_hora():
     mock_db = MagicMock()
     mock_db.read_sensor_data_by_time.return_value = [
-        {"device_id": "s1", "location": "office", "temperature": 22.0, "humidity": 55.0, "co2": 400.0}
+        {
+            "device_id": "s1",
+            "location": "office",
+            "temperature": 22.0,
+            "humidity": 55.0,
+            "co2": 400.0,
+        }
     ]
     with patch("sensorhub.reports.MinioClient"):
         result = generate(mock_db, hour="2024-01-15T14:00:00")
