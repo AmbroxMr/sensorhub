@@ -39,7 +39,9 @@ class MinioClient:
             {
                 "name": obj.object_name,
                 "size": obj.size,
-                "last_modified": obj.last_modified.isoformat() if obj.last_modified else None,
+                "last_modified": obj.last_modified.isoformat()
+                if obj.last_modified
+                else None,
             }
             for obj in objects
         ]

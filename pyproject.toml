@@ -7,7 +7,7 @@ packages = ["sensorhub"]
 
 [project]
 name = "sensorhub"
-version = "0.1.1"
+version = "1.0.0"
 description = "Add your description here"
 # readme = "README.md"
 requires-python = ">=3.11"
@@ -23,12 +23,17 @@ dependencies = [
     "uvicorn>=0.41.0",
 ]
 
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-v"
+
 [dependency-groups]
 dev = [
     "httpx>=0.27",
     "pytest>=8.0",
     "pytest-cov>=6.0",
     "pytest-docker>=3.0",
+    "requests>=2.33.1",
     "ruff>=0.9",
     "ty>=0.0.1a8",
 ]

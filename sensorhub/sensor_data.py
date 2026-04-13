@@ -2,6 +2,7 @@ from pydantic import BaseModel, ConfigDict
 from typing import Optional
 from datetime import datetime
 
+
 class SensorData(BaseModel):
     device_id: str
     location: str

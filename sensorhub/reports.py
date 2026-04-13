@@ -19,7 +19,9 @@ def generate(db: MongoDB, hour: str | None = None) -> dict:
 
     docs = list(db.read_sensor_data_by_time(start.isoformat(), end.isoformat()))
     if not docs:
-        raise HTTPException(status_code=404, detail="No data found for the specified hour")
+        raise HTTPException(
+            status_code=404, detail="No data found for the specified hour"
+        )
     for doc in docs:
         doc.pop("_id", None)
 

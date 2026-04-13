@@ -1,0 +1,48 @@
+name: Tests
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  unit:
+    name: Unit Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: astral-sh/setup-uv@v5
+
+      - name: Install dependencies
+        run: uv sync --group dev
+
+      - name: Run unit tests
+        run: uv run pytest tests/unit/ -v --cov=sensorhub --cov-report=term-missing
+
+  integration:
+    name: Integration Tests
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' || github.event_name == 'pull_request'
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: astral-sh/setup-uv@v5
+
+      - name: Install dependencies
+        run: uv sync --group dev
+
+      - name: Run integration tests
+        run: uv run pytest tests/integration/ -v
+        env:
+          MONGO_USERNAME: root
+          MONGO_ROOT_PASSWORD: mongo
+          MONGO_PORT: "27017"
+          MONGO_IP: localhost
+          MONGO_DB: sensorhub
+          MINIO_ACCESS_KEY: minioadmin
+          MINIO_SECRET_KEY: minioadmin
+          MINIO_PORT: "9000"
+          MINIO_IP: localhost
+          MINIO_BUCKET: sensorhub
+          API_PORT: "8000"
+          RABBITMQ_URL: "amqp://guest:guest@localhost:5672/"
