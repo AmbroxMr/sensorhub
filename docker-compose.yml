@@ -85,6 +85,19 @@ services:
     networks:
       - sensorhub-net
 
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    ports:
+      - "${FRONTEND_PORT:-8501}:8501"
+    environment:
+      API_URL: http://api:8000
+    depends_on:
+      - api
+    networks:
+      - sensorhub-net
+
 volumes:
   mongo_data:
   minio_data:

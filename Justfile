@@ -6,6 +6,9 @@ default:
 dev:
     uv run uvicorn sensorhub.api:app --reload --port 8000
 
+frontend:
+    uv run --group frontend streamlit run frontend/app.py
+
 # ── Tests ──────────────────────────────────────────────────────────────────────
 
 test:
