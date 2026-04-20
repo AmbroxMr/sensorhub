@@ -38,7 +38,7 @@ if not raw:
     st.stop()
 
 df = pd.DataFrame(raw)
-df["timestamp"] = pd.to_datetime(df["timestamp"])
+df["timestamp"] = pd.to_datetime(df["timestamp"], format='ISO8601')
 df = df.sort_values("timestamp", ascending=False)
 
 display_cols = ["timestamp", "device_id", "location", "temperature", "humidity", "co2"]

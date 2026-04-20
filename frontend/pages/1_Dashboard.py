@@ -58,7 +58,7 @@ if not raw:
     st.info("Sin lecturas disponibles.")
 else:
     df = pd.DataFrame(raw)
-    df["timestamp"] = pd.to_datetime(df["timestamp"])
+    df["timestamp"] = pd.to_datetime(df["timestamp"], format='ISO8601')
     df = df.sort_values("timestamp")
 
     devices = df["device_id"].unique().tolist()
