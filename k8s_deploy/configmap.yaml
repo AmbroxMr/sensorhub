@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: sensorhub-config
+  namespace: sensorhub
+data:
+  # Dentro del mismo namespace los servicios se resuelven por nombre
+  MONGO_IP: "mongodb"
+  MONGO_PORT: "27017"
+  MONGO_DB: "sensorhub"
+  MINIO_IP: "minio"
+  MINIO_PORT: "9000"
+  MINIO_BUCKET: "bucket"
+  RABBITMQ_URL: "amqp://guest:guest@rabbitmq:5672/"

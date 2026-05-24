@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-config
+  labels:
+    app.kubernetes.io/name: sensorhub
+    app.kubernetes.io/instance: {{ .Release.Name }}
+data:
+  MONGO_IP: "{{ .Release.Name }}-mongodb"
+  MONGO_PORT: "27017"
+  MONGO_DB: {{ .Values.mongodb.auth.database | quote }}
+  MINIO_IP: "{{ .Release.Name }}-minio"
+  MINIO_PORT: "9000"
+  MINIO_BUCKET: {{ index .Values.minio.provisioning.buckets 0 "name" | quote }}
+  RABBITMQ_URL: "amqp://{{ .Values.rabbitmq.auth.username }}:{{ .Values.rabbitmq.auth.password }}@{{ .Release.Name }}-rabbitmq:5672/"

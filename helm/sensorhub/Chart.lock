@@ -1,0 +1,12 @@
+dependencies:
+- name: mongodb
+  repository: https://raw.githubusercontent.com/bitnami/charts/archive-full-index/bitnami
+  version: 16.0.3
+- name: minio
+  repository: https://raw.githubusercontent.com/bitnami/charts/archive-full-index/bitnami
+  version: 14.0.0
+- name: rabbitmq
+  repository: https://raw.githubusercontent.com/bitnami/charts/archive-full-index/bitnami
+  version: 12.0.13
+digest: sha256:116e71d1cd5cb1f81a2c5fca0b7458e07663ab9f9220c0f6e574385e14afcc53
+generated: "2026-05-15T16:17:16.039925+02:00"

@@ -1,0 +1,77 @@
+image:
+  repository: sensorhub
+  frontendRepository: sensorhub-frontend
+  tag: latest
+  pullPolicy: IfNotPresent
+
+api:
+  replicas: 1
+  port: 8000
+  service:
+    type: NodePort
+    nodePort: 30800
+
+worker:
+  replicas: 1
+
+
+# ---------------------------------------------------------------------------
+# Bitnami subcharts
+# ---------------------------------------------------------------------------
+
+mongodb:
+  auth:
+    rootPassword: "changeme"
+    username: "root"
+    database: "sensorhub"
+  initdbScripts:
+    init.js: |
+      db = db.getSiblingDB("sensorhub");
+      db.createCollection("sensor_data");
+      db.sensor_data.createIndex({ device_id: 1 });
+      db.sensor_data.createIndex({ timestamp: 1 });
+  persistence:
+    size: 1Gi
+    storageClass: standard
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+
+minio:
+  auth:
+    rootUser: "minioadmin"
+    rootPassword: "changeme"
+  provisioning:
+    enabled: true
+    buckets:
+      - name: bucket
+  persistence:
+    size: 2Gi
+    storageClass: standard
+  service:
+    type: NodePort
+    nodePorts:
+      api: "30900"
+      console: "30901"
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+
+rabbitmq:
+  auth:
+    username: guest
+    password: guest
+  persistence:
+    size: 1Gi
+    storageClass: standard
+  service:
+    type: NodePort
+    nodePorts:
+      amqp: "30672"
+      manager: "31672"
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
